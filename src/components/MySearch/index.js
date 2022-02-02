@@ -73,7 +73,7 @@ export default function CustomizedInputBase() {
             borderRadius: 1,
             p: isMobile ? "10px 6px" : "0px 18px 0px 4px",
             display: "flex",
-            alignItems: "space-around",
+            alignItems: "center",
             justifyContent: "center",
             flexDirection: { xs: "column", md: "row" },
           }}
