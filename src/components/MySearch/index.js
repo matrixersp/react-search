@@ -29,6 +29,33 @@ const savedSearches = [
   { id: 3, title: "Brown Brothers", productsCount: 653, query: "Show Query" },
 ];
 
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)(({ theme }) => ({
+  backgroundColor: "#efefef",
+  width: "fit-content",
+  "& > .MuiToggleButton-root": {
+    textTransform: "capitalize",
+    fontWeight: "Bold",
+    padding: "7px 28px",
+  },
+  "& .MuiToggleButtonGroup-grouped": {
+    margin: theme.spacing(0.3),
+    border: 0,
+    "&.Mui-disabled": {
+      border: 0,
+    },
+    "&.Mui-selected": {
+      backgroundColor: "#fff",
+    },
+    "&:not(:first-of-type)": {
+      borderRadius: theme.shape.borderRadius,
+    },
+    "&:first-of-type": {
+      borderRadius: theme.shape.borderRadius,
+      marginRight: 4,
+    },
+  },
+}));
+
 const StyledButton = styled(Button)(({ theme }) => ({
   fontWeight: "bold",
   textTransform: "Capitalize",
@@ -50,22 +77,15 @@ export default function CustomizedInputBase() {
   return (
     <Stack spacing={1} direction="column">
       <Stack spacing={2} sx={{ mb: 2, px: isMobile ? 2 : 3 }}>
-        <ToggleButtonGroup
-          color="primary"
+        <StyledToggleButtonGroup
           value={brand}
           exclusive
           onChange={handleBrand}
-          sx={{
-            "& > .MuiToggleButton-root": {
-              textTransform: "capitalize",
-              fontWeight: "Bold",
-              py: "5px",
-            },
-          }}
+          aria-label="type of brand"
         >
           <ToggleButton value="my-brand">My Brand</ToggleButton>
           <ToggleButton value="all-brands">All Brands</ToggleButton>
-        </ToggleButtonGroup>
+        </StyledToggleButtonGroup>
         <Box
           component="form"
           sx={{
