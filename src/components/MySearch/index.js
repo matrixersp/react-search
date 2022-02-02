@@ -19,6 +19,9 @@ import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import Link from "@mui/material/Link";
 import { StyledSwitch } from "./StyledSwitch";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import { useMediaQuery } from "@mui/material";
 
 const savedSearches = [
   { id: 1, title: "Brown Brothers", productsCount: 653, query: "Show Query" },
@@ -33,42 +36,70 @@ const StyledButton = styled(Button)(({ theme }) => ({
 
 export default function CustomizedInputBase() {
   const [tabValue, setTabValue] = React.useState("1");
+  const [brand, setBrand] = React.useState("my-brand");
+  const isMobile = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   const handleChange = (event, newValue) => {
     setTabValue(newValue);
   };
 
+  const handleBrand = (event, newBrand) => {
+    setBrand(newBrand);
+  };
+
   return (
-    <Stack
-      spacing={2}
-      direction="column"
-      divider={<Divider orientation="horizontal" />}
-    >
-      <Stack spacing={2} sx={{ mb: 2, px: 3 }}>
+    <Stack spacing={1} direction="column">
+      <Stack spacing={2} sx={{ mb: 2, px: isMobile ? 2 : 3 }}>
+        <ToggleButtonGroup
+          color="primary"
+          value={brand}
+          exclusive
+          onChange={handleBrand}
+          sx={{
+            "& > .MuiToggleButton-root": {
+              textTransform: "capitalize",
+              fontWeight: "Bold",
+              py: "5px",
+            },
+          }}
+        >
+          <ToggleButton value="my-brand">My Brand</ToggleButton>
+          <ToggleButton value="all-brands">All Brands</ToggleButton>
+        </ToggleButtonGroup>
         <Box
           component="form"
           sx={{
             border: "1px solid #dfdcda",
             borderRadius: 1,
-            pl: "4px",
-            pr: "20px",
+            p: isMobile ? "10px 6px" : "0px 18px 0px 4px",
             display: "flex",
-            alignItems: "center",
+            alignItems: "space-around",
+            justifyContent: "center",
+            flexDirection: { xs: "column", md: "row" },
           }}
         >
-          <IconButton
-            type="submit"
-            sx={{ p: "10px", my: 0.5 }}
-            aria-label="search"
-          >
-            <SearchIcon />
-          </IconButton>
-          <InputBase
-            sx={{ ml: 0.5, flex: 1 }}
-            placeholder="Search by Title, Barcode, Brand..."
-            inputProps={{ "aria-label": "Search by Title, Barcode, Brand..." }}
-          />
-          <Divider sx={{ height: 52, mx: 2 }} orientation="vertical" />
+          <Stack sx={{ flex: 1, width: "100%" }} direction="row">
+            <IconButton
+              type="submit"
+              sx={{ m: 0.5 }}
+              aria-label="search"
+              size="small"
+            >
+              <SearchIcon fontSize="inherit" />
+            </IconButton>
+            <InputBase
+              sx={{ ml: 0.5, flex: 1 }}
+              placeholder="Search by Title, Barcode, Brand..."
+              inputProps={{
+                "aria-label": "Search by Title, Barcode, Brand...",
+              }}
+            />
+          </Stack>
+          {isMobile ? (
+            <Divider sx={{ width: "100%", my: 1 }} orientation="horizontal" />
+          ) : (
+            <Divider sx={{ height: 40, mx: 2 }} orientation="vertical" />
+          )}
           <Stack direction="row" spacing={1} alignItems="center">
             <StyledSwitch
               defaultChecked
@@ -84,19 +115,14 @@ export default function CustomizedInputBase() {
           </Stack>
         </Box>
         <div>
-          <StyledButton
-            variant="contained"
-            size="large"
-            sx={{ p: "14px 22px" }}
-          >
+          <StyledButton variant="contained" size="medium">
             Search
           </StyledButton>
           <StyledButton
             variant="outlined"
-            size="large"
+            size="medium"
             sx={{
               ml: 1,
-              p: "14px 22px",
               border: "1px solid #d1d1d1",
               color: "text.primary",
             }}
@@ -105,11 +131,12 @@ export default function CustomizedInputBase() {
           </StyledButton>
         </div>
       </Stack>
+      <Divider orientation="horizontal" />
       <Box
         sx={{
           typography: "body1",
           "& > .MuiTabPanel-root": { p: 0 },
-          px: 3,
+          px: isMobile ? 2 : 3,
         }}
       >
         <TabContext value={tabValue}>
@@ -142,18 +169,18 @@ export default function CustomizedInputBase() {
                       key={item.id}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        "& th": { p: 0 },
+                        "& th, & td": { pl: 0, py: "6px" },
                       }}
                     >
                       <TableCell component="th" scope="row">
                         {item.title}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Link href="#" underline="hover" color="secondary">
                           View Products({item.productsCount})
                         </Link>
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Link href="#" underline="hover" color="secondary">
                           Show Query
                         </Link>
@@ -179,26 +206,26 @@ export default function CustomizedInputBase() {
             </TableContainer>
           </TabPanel>
           <TabPanel value="2">
-            <TableContainer sx={{ maxHeight: "140px" }}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableContainer sx={{ maxHeight: 140 }}>
+              <Table sx={{ minWidth: 350 }} aria-label="simple table">
                 <TableBody>
                   {savedSearches.map((item) => (
                     <TableRow
                       key={item.id}
                       sx={{
                         "&:last-child td, &:last-child th": { border: 0 },
-                        "& th": { p: 0 },
+                        "& th, & td": { pl: 0, py: "6px" },
                       }}
                     >
                       <TableCell component="th" scope="row">
                         {item.title}
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Link href="#" underline="hover" color="secondary">
                           View Products({item.productsCount})
                         </Link>
                       </TableCell>
-                      <TableCell align="right">
+                      <TableCell align="center">
                         <Link href="#" underline="hover" color="secondary">
                           Show Query
                         </Link>

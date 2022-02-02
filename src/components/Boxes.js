@@ -19,7 +19,7 @@ const CardComponent = ({
     <Grid item id={id} {...size}>
       <Card elevation={2}>
         <CardHeader avatar={avatar} title={title} action={action} />
-        <Divider sx={{ mt: 3, mb: 3 }} />
+        <Divider sx={{ mt: 0, mb: 2 }} />
         <CardContent sx={{ maxHeight: "350px", ...sx }}>{children}</CardContent>
       </Card>
     </Grid>
@@ -63,7 +63,7 @@ const Boxes = () => {
       id: 4,
       size: { xs: 6, sm: 3, md: 4 },
       sx: {
-        minHeight: { xs: 150, md: 350 },
+        minHeight: { xs: 420, md: 350 },
         p: 0,
       },
       avatar: null,
